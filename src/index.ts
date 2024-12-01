@@ -7,7 +7,7 @@ import { UserStatistics } from './types/osu';
 import { getRankings, getToken } from './utils/osu';
 import { log } from './utils/logger';
 import { ChangedUser } from './types/general';
-import { flagUrl, renderLeaderboard } from './utils/renderer';
+import { assembleUpdate, flagUrl, renderLeaderboard } from './utils/general';
 
 
 async function main() {
@@ -21,7 +21,7 @@ async function main() {
     let rankings: UserStatistics[] = (await getRankings(token.access_token)).ranking;
 
     // Main loop to detect changes in the top 50 scores, runs every 30 seconds
-    // cron.schedule('*/3 * * * * *', async () => {
+    cron.schedule('*/10 * * * * *', async () => {
         // Check if token has expired
         if (Date.now() >= token_expiry) {
             log('Token has expired, exchanging for new one', LogLevel.INFO);
@@ -29,6 +29,8 @@ async function main() {
             token = await getToken();
             token_expiry = Date.now() + token.expires_in * 1000;
         }
+
+        log('Checking for changes in rankings', LogLevel.DEBUG);
 
         // Fetch new rankings
         const new_rankings: UserStatistics[] = (await getRankings(token.access_token)).ranking;
@@ -42,17 +44,7 @@ async function main() {
         if (changes.length > 0) {
             log('Changes detected!', LogLevel.INFO);
 
-            // changes.forEach((user, index) => {
-            //     const old_rank = rankings.findIndex((ranking) => ranking.user.id === user.user.id) + 1;
-            //     const new_rank = index + 1;
-
-            //     if (old_rank > new_rank) {
-            //         log(`#${new_rank} ${user.user.username} gained ${old_rank - new_rank} rank(s) gain of ${Math.round(user.pp - rankings[index].pp)} PP`, LogLevel.INFO);
-            //     } else {
-            //         log(`#${new_rank} ${user.user.username} lost ${new_rank - old_rank} rank(s)`, LogLevel.INFO);
-            //     }
-            // });
-
+            // really shitty but it's whatever
             const changedUsers: ChangedUser[] = changes.map((user, index) => {
                 const old_rank = rankings.findIndex((ranking) => ranking.user.id === user.user.id) + 1;
                 const new_rank = index + 1;
@@ -68,13 +60,14 @@ async function main() {
                 };
             });
 
-            await renderLeaderboard(changedUsers);
+            const message = assembleUpdate(changedUsers);
+            const image = await renderLeaderboard(changedUsers);
         }
 
         rankings = new_rankings;
 
         log(`Token expires in ${Math.floor((token_expiry - Date.now()) / 1000 / 60)} minutes`, LogLevel.DEBUG);
-    // });
+    });
 }
 
 main();
