@@ -64,10 +64,16 @@ async function main() {
             });
 
             const message = assembleUpdate(changedUsers);
+
+            log(`${message}`, LogLevel.INFO);
+
+            log('Rendering leaderboard image', LogLevel.DEBUG);
+            
+            console.time("Leaderboard Render");
             const image = await renderLeaderboard(changedUsers);
+            console.timeEnd("Leaderboard Render");
 
-            log(`Sending out update: ${message}`, LogLevel.INFO);
-
+            log('Posting updates to social media platforms.', LogLevel.DEBUG);
             await postDiscordUpdate(message, image);
             await postBlueskyUpdate(message, image);
         }
