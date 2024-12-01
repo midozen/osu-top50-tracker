@@ -2,6 +2,7 @@ import nodeHtmlToImage from "node-html-to-image";
 import fs from "fs";
 import path from "path";
 import { ChangedUser } from "../types/general";
+import sharp from "sharp";
 
 export async function renderLeaderboard(users: ChangedUser[]): Promise<Buffer | undefined> {
   try {
@@ -42,4 +43,17 @@ export function assembleUpdate(users: ChangedUser[]): string {
   });
 
   return message.join('\n');
+}
+
+export async function fitSquareImage(image: Buffer): Promise<Buffer> {
+  const { width, height } = await sharp(image).metadata();
+  const size = Math.max(width ?? 0, height ?? 0);
+
+  return await sharp(image)
+    .resize({
+      width: width, 
+      height: width, fit: 'contain', 
+      background: { r: 35, g: 42, b: 34, alpha: 255 }
+    })
+    .toBuffer();
 }

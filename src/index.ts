@@ -24,7 +24,7 @@ async function main() {
     let rankings: UserStatistics[] = (await getRankings(token.access_token)).ranking;
 
     // Main loop to detect changes in the top 50 scores, runs every 30 seconds
-    cron.schedule('*/10 * * * * *', async () => {
+    cron.schedule('*/30 * * * * *', async () => {
         // Check if token has expired
         if (Date.now() >= token_expiry) {
             log('Token has expired, exchanging for new one', LogLevel.INFO);
@@ -33,7 +33,7 @@ async function main() {
             token_expiry = Date.now() + token.expires_in * 1000;
         }
 
-        log('Checking for changes in rankings', LogLevel.DEBUG);
+        log('Checking for changes in rankings', LogLevel.INFO);
 
         // Fetch new rankings
         const new_rankings: UserStatistics[] = (await getRankings(token.access_token)).ranking;
@@ -70,6 +70,9 @@ async function main() {
 
             await postDiscordUpdate(message, image);
             await postBlueskyUpdate(message, image);
+        }
+        else  {
+            log('No changes detected', LogLevel.INFO);
         }
 
         rankings = new_rankings;

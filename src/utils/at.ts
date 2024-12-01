@@ -2,6 +2,7 @@ import { AtpAgent } from '@atproto/api';
 
 import { LogLevel } from "../types/logger";
 import { log } from "./logger";
+import { fitSquareImage } from './general';
 
 export async function postBlueskyUpdate(message: string, image: Buffer | undefined) {
     const agent = new AtpAgent({
@@ -19,6 +20,8 @@ export async function postBlueskyUpdate(message: string, image: Buffer | undefin
     });
 
     if (image) {
+        image = await fitSquareImage(image);
+
         const blob = new Blob([image], { type: 'image/png' });
         const uploadedBlob = await agent.uploadBlob(blob, { encoding: 'image/png' });
 
