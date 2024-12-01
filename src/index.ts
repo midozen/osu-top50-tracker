@@ -1,13 +1,16 @@
 import cron from 'node-cron';
-import nodeHtmlToImage from 'node-html-to-image';
 
 import { LogLevel } from './types/logger';
 import { UserStatistics } from './types/osu';
+import { ChangedUser } from './types/general';
 
+import { assembleUpdate, flagUrl, renderLeaderboard } from './utils/general';
+import { postDiscordUpdate } from './utils/discord';
+import { postBlueskyUpdate } from './utils/at';
 import { getRankings, getToken } from './utils/osu';
 import { log } from './utils/logger';
-import { ChangedUser } from './types/general';
-import { assembleUpdate, flagUrl, renderLeaderboard } from './utils/general';
+
+// create bluesky agent
 
 
 async function main() {
@@ -62,11 +65,16 @@ async function main() {
 
             const message = assembleUpdate(changedUsers);
             const image = await renderLeaderboard(changedUsers);
+
+            log(`Sending out update: ${message}`, LogLevel.INFO);
+
+            await postDiscordUpdate(message, image);
+            await postBlueskyUpdate(message, image);
         }
 
         rankings = new_rankings;
 
-        log(`Token expires in ${Math.floor((token_expiry - Date.now()) / 1000 / 60)} minutes`, LogLevel.DEBUG);
+        log(`Osu! Token expires in ${Math.floor((token_expiry - Date.now()) / 1000 / 60)} minutes`, LogLevel.DEBUG);
     });
 }
 
