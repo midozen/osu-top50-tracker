@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- sorry for whoever has to read my sloppy css code -->
+    <style>
+      @font-face {
+        font-family: Torus;
+        src: url("https://files.catbox.moe/jw4o1a.woff") format("woff");
+      }
+
+      body {
+        background-color: #232a22;
+        font-family: Torus, Inter, "Helvetica Neue", Tahoma, Arial,
+          "Hiragino Kaku Gothic ProN", Meiryo, "Microsoft YaHei",
+          "Apple SD Gothic Neo", sans-serif;
+        color: white;
+        font-size: 20px;
+        margin: 0;
+        padding: 10px;
+        width: 500px;
+      }
+
+      .rank {
+        background-color: #2f382e;
+        padding: 10px 20px;
+        border-radius: 5px;
+        display: flex;
+        align-items: center;
+      }
+      
+      .rank-n {
+        width: 35px;
+      }
+
+      .ranks {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        width: 500px;
+      }
+
+      .flag-country {
+        width: 30px;
+        height: 30px;
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+        margin-right: 10px;
+      }
+
+      .username {
+        font-size: 18px;
+        color: #9cd998;
+        margin-bottom: 4px;
+      }
+
+      .movement {
+        width: 50px;
+        text-align: center;
+        font-size: 18px;
+        display: flex;
+        padding-bottom: 2px;
+        margin-right: 4px;
+        align-items: center;
+        justify-content: center;
+        gap: 3px;
+      }
+
+      .gain {
+        color: #b3fd64;
+      }
+
+      .loss {
+        color: #ff6663;
+      }
+
+      .right {
+        margin-left: auto;
+        font-size: 18px;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+      }
+    </style>
+
+    <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="ranks">
+      {{#each users}}
+        <div class="rank">
+          <span class="rank-n">#{{new_rank}}</span>
+            {{#if rank_up}}
+              <span class="movement gain">
+                <i class="bx bx-up-arrow-alt"></i> {{rank_difference}}
+              </span>
+            {{else}}
+              <span class="movement loss">
+                <i class="bx bx-down-arrow-alt"></i> {{rank_difference}}
+              </span>
+            {{/if}} 
+          <span
+            class="flag-country"
+            style="
+              background-image: url('https://osu.ppy.sh{{flag_url}}');
+            "
+          ></span>
+          <span class="username">{{username}}</span>
+          <!--  -->
+          {{#if rank_up}}
+          <span class="right gain"> <i class="bx bx-plus"></i> {{pp_change}} PP </span>
+          {{/if}} 
+        </div>
+      {{/each}}
+    </div>
+  </body>
+</html>

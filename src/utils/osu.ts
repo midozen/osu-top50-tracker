@@ -45,6 +45,16 @@ export async function getRankings(token: string): Promise<Rankings> {
   // --header "Content-Type: application/json" \
   // --header "Accept: application/json"
 
+  const dummy_data: boolean = process.env.DUMMY_DATA === "true";
+
+  if (dummy_data) {
+    const data: Rankings = JSON.parse(JSON.stringify(require("../assets/rankings.json")));
+
+    // shuffle around the top 50 players
+    data.ranking = data.ranking.sort(() => Math.random() - 0.5);
+    return data;
+  }
+
   const response = await fetch(
     "https://osu.ppy.sh/api/v2/rankings/osu/performance",
     {
