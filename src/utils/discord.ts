@@ -27,5 +27,5 @@ export async function postDiscordUpdate(message: string, image: Buffer | undefin
         throw new Error(error);
     }
 
-    log('Posted update to Discord', LogLevel.DEBUG);
+    log('Posted update to Discord', LogLevel.INFO);
 }

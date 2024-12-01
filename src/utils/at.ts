@@ -38,7 +38,7 @@ export async function postBlueskyUpdate(message: string, image: Buffer | undefin
               }
         });
 
-        log('Posted update to Bluesky!', LogLevel.DEBUG);
+        log('Posted update to Bluesky!', LogLevel.INFO);
         return;
     }
 
@@ -46,5 +46,5 @@ export async function postBlueskyUpdate(message: string, image: Buffer | undefin
         text: message
     });
 
-    log('Posted update to Bluesky!', LogLevel.DEBUG);
+    log('Posted update to Bluesky!', LogLevel.INFO);
 }

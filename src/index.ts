@@ -50,14 +50,14 @@ async function main() {
             // really shitty but it's whatever
             const changedUsers: ChangedUser[] = changes.map((user, index) => {
                 const old_rank = rankings.findIndex((ranking) => ranking.user.id === user.user.id) + 1;
-                const new_rank = index + 1;
+                const new_rank = new_rankings.findIndex((ranking) => ranking.user.id === user.user.id) + 1;
 
                 return {
                     new_rank,
                     old_rank,
                     rank_difference: Math.abs(old_rank - new_rank),
                     rank_up: old_rank > new_rank,
-                    pp_change: Math.round(user.pp - rankings[index].pp),
+                    pp_change: Math.round(user.pp - rankings[old_rank - 1].pp),
                     username: user.user.username,
                     flag_url: flagUrl(user.user.country_code),
                 };
@@ -76,8 +76,6 @@ async function main() {
         }
 
         rankings = new_rankings;
-
-        log(`Osu! Token expires in ${Math.floor((token_expiry - Date.now()) / 1000 / 60)} minutes`, LogLevel.DEBUG);
     });
 }
 

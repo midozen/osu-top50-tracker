@@ -8,7 +8,6 @@ export async function renderLeaderboard(users: ChangedUser[]): Promise<Buffer | 
   try {
     const html = fs.readFileSync(path.resolve(__dirname, '../assets/rankings.html'), 'utf8');
     const render = await nodeHtmlToImage({
-      output: './output.png',
       html,
       content: { users }
     });
