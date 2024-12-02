@@ -4,7 +4,7 @@ A bot that monitors the top 50 osu! ranked leaderboard, checking every 30 second
 
 ## Prerequisites
 
-- Node.js (version X or higher)
+- Node.js (version v20 or higher)
 - osu! API credentials (Client ID and Secret)
 
 ## Setup
@@ -55,3 +55,4 @@ A bot that monitors the top 50 osu! ranked leaderboard, checking every 30 second
 
 ### Notes
 - Set `DUMMY_DATA=true` in the `.env` file for testing with mock data.
+- This code is still pending a rewrite, and everything needs to be stabalized still.
