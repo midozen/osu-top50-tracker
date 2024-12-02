@@ -1,6 +1,6 @@
 # osu! Top 50 Leaderboard Rank Tracker
 
-A bot that monitors the top 50 osu! [ranked leaderboard](https://osu.ppy.sh/rankings/osu/performance), checking every 30 seconds for changes.
+A bot that actively tracks and reports osu!standard rankings amongst the osu! top 50.
 
 ## Prerequisites
 
