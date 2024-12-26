@@ -1,6 +1,7 @@
 import { LogLevel } from "../types/logger";
 import { log } from "./logger";
 
+// Post an update to Discord
 export async function postDiscordUpdate(message: string, image: Buffer | undefined) {
     const webhook_url = process.env.DISCORD_WEBHOOK_URL;
     if (!webhook_url) {
@@ -10,6 +11,7 @@ export async function postDiscordUpdate(message: string, image: Buffer | undefin
 
     const form = new FormData();
 
+    // If an image is provided, add it to the message
     if (image) {
         const blob = new Blob([image], { type: 'image/png' });
         form.append('file1', blob, 'output.png');

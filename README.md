@@ -25,25 +25,21 @@ A bot that actively tracks and reports osu!standard rankings amongst the osu! to
     LOG_LEVEL=INFO # DEBUG, INFO, NONE
     DUMMY_DATA=false # Used for testing purposes
 
+    # OPTIONAL: Configure the path to chromium
+    # CHROMIUM_PATH=/usr/bin/chromium-browser
+
     OSU_CLIENT_ID={YOURCLIENTIDHERE}
     OSU_CLIENT_SECRET={YOURCLIENTSECRETHERE}
 
-    # Optional: Configure Discord integration
+    # Configure Discord integration
     # DISCORD_WEBHOOK_URL=https://discord.com/api/webhooks/...
 
-    # Optional: Configure Bluesky integration
+    # Configure Bluesky integration
     # BLUESKY_USERNAME={USERNAME}.bsky.app
     # BLUESKY_PASSWORD={PASSWORD}
     ```
 
-4. Build the code:
-   ```bash
-   npm run build
-   ```
-
-5. Copy the assets folder from src into the built dist folder
-
-6. Start the bot
+4. Start the bot
 
    ```bash
    npm start
@@ -55,4 +51,5 @@ A bot that actively tracks and reports osu!standard rankings amongst the osu! to
 
 ### Notes
 - Set `DUMMY_DATA=true` in the `.env` file for testing with mock data.
+- If you are having troubles with the bot rendering the rankings as an image, try manually setting the path to chrome in your .env
 - This code is still pending a rewrite, and everything needs to be stabalized still.

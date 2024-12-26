@@ -47,10 +47,11 @@ export async function getRankings(token: string): Promise<Rankings> {
 
   const dummy_data: boolean = process.env.DUMMY_DATA === "true";
 
+  // If we are using dummy data, return the dummy data
   if (dummy_data) {
     const data: Rankings = JSON.parse(JSON.stringify(require("../assets/rankings.json")));
 
-    // shuffle around the top 50 players
+    // Shuffle around the players
     data.ranking = data.ranking.sort(() => Math.random() - 0.5);
     return data;
   }

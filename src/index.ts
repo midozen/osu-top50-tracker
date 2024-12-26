@@ -10,9 +10,6 @@ import { postBlueskyUpdate } from './utils/at';
 import { getRankings, getToken } from './utils/osu';
 import { log } from './utils/logger';
 
-// create bluesky agent
-
-
 async function main() {
     log('Exchanging client credentials for access token', LogLevel.DEBUG);
 
@@ -47,7 +44,7 @@ async function main() {
         if (changes.length > 0) {
             log('Changes detected!', LogLevel.INFO);
 
-            // really shitty but it's whatever
+            // Put all of the changes into a nice format, really shitty but it's whatever
             const changedUsers: ChangedUser[] = changes.map((user, index) => {
                 const old_rank = rankings.findIndex((ranking) => ranking.user.id === user.user.id) + 1;
                 const new_rank = new_rankings.findIndex((ranking) => ranking.user.id === user.user.id) + 1;
