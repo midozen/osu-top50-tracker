@@ -53,3 +53,9 @@ A bot that actively tracks and reports osu!standard rankings amongst the osu! to
 - Set `DUMMY_DATA=true` in the `.env` file for testing with mock data.
 - If you are having troubles with the bot rendering the rankings as an image, try manually setting the path to chrome in your .env
 - This code is still pending a rewrite, and everything needs to be stabalized still.
+
+### Todo List
+
+- [ ] Fix that one weird issue where the output reports that there are changes, but dosen't do anything.
+- [ ] Add support for posting to Twitter/X
+- [ ] Docker version so I don't have to do any weird systemctl stuff in production.
