@@ -7,6 +7,7 @@ import { ChangedUser } from './types/general';
 import { assembleUpdate, flagUrl, renderLeaderboard } from './utils/general';
 import { postDiscordUpdate } from './utils/discord';
 import { postBlueskyUpdate } from './utils/at';
+import { postTwitterUpdate } from './utils/twitter';
 import { getRankings, getToken } from './utils/osu';
 import { log } from './utils/logger';
 
@@ -71,8 +72,10 @@ async function main() {
             console.timeEnd("Leaderboard Render");
 
             log('Posting updates to social media platforms.', LogLevel.DEBUG);
+            
             await postDiscordUpdate(message, image);
             await postBlueskyUpdate(message, image);
+            await postTwitterUpdate(message, image);
         }
         else  {
             log('No changes detected', LogLevel.INFO);

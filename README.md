@@ -37,6 +37,12 @@ A bot that actively tracks and reports osu!standard rankings amongst the osu! to
     # Configure Bluesky integration
     # BLUESKY_USERNAME={USERNAME}.bsky.app
     # BLUESKY_PASSWORD={PASSWORD}
+
+    # Configure Twitter intergration
+    # TWITTER_APP_KEY=74L2AP4iqs7...
+    # TWITTER_APP_SECRET=y0qAFPdprkT...
+    # TWITTER_ACCESS_TOKEN=IIGD8BAR81P...
+    # TWITTER_ACCESS_SECRET=hLBAgqJxoxQ...
     ```
 
 4. Start the bot
@@ -57,5 +63,5 @@ A bot that actively tracks and reports osu!standard rankings amongst the osu! to
 ### Todo List
 
 - [ ] Fix that one weird issue where the output reports that there are changes, but dosen't do anything.
-- [ ] Add support for posting to Twitter/X
+- [x] Add support for posting to Twitter/X
 - [ ] Docker version so I don't have to do any weird systemctl stuff in production.
