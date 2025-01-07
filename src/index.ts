@@ -47,6 +47,9 @@ async function main() {
 
             // Put all of the changes into a nice format, really shitty but it's whatever
             const changedUsers: ChangedUser[] = changes.map((user, index) => {
+
+                log('Detected change in user: ' + user.user.username, LogLevel.DEBUG);
+
                 const old_rank = rankings.findIndex((ranking) => ranking.user.id === user.user.id) + 1;
                 const new_rank = new_rankings.findIndex((ranking) => ranking.user.id === user.user.id) + 1;
 
@@ -60,6 +63,8 @@ async function main() {
                     flag_url: flagUrl(user.user.country_code),
                 };
             });
+
+            log('Assembling update message', LogLevel.DEBUG);
 
             const message = assembleUpdate(changedUsers);
 
