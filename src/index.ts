@@ -48,8 +48,6 @@ async function main() {
             // Put all of the changes into a nice format, really shitty but it's whatever
             const changedUsers: ChangedUser[] = changes.map((user, index) => {
 
-                log('Detected change in user: ' + user.user.username, LogLevel.DEBUG);
-
                 const old_rank = rankings.findIndex((ranking) => ranking.user.id === user.user.id) + 1;
                 const new_rank = new_rankings.findIndex((ranking) => ranking.user.id === user.user.id) + 1;
 
@@ -71,16 +69,17 @@ async function main() {
             log(`${message}`, LogLevel.INFO);
 
             log('Rendering leaderboard image', LogLevel.DEBUG);
-            
-            console.time("Leaderboard Render");
-            const image = await renderLeaderboard(changedUsers);
-            console.timeEnd("Leaderboard Render");
 
-            log('Posting updates to social media platforms.', LogLevel.DEBUG);
-            
-            await postDiscordUpdate(message, image);
-            await postBlueskyUpdate(message, image);
-            await postTwitterUpdate(message, image);
+            try {
+                const image = await renderLeaderboard(changedUsers);
+                await Promise.all([
+                    postDiscordUpdate(message, image),
+                    postBlueskyUpdate(message, image),
+                    postTwitterUpdate(message, image),
+                ]);
+            } catch (error: any) {
+                log(`Error posting updates or rendering leaderboard: ${error.message}`, LogLevel.INFO);
+            }
         }
         else  {
             log('No changes detected', LogLevel.INFO);
