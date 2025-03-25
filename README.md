@@ -63,5 +63,6 @@ A bot that actively tracks and reports osu!standard rankings amongst the osu! to
 ### Todo List
 
 - [ ] Fix that one weird issue where the output reports that there are changes, but dosen't do anything.
-- [x] Add support for posting to Twitter/X
+- [ ] Detect when a new player enters the top 50
 - [ ] Docker version so I don't have to do any weird systemctl stuff in production.
+- [x] Add support for posting to Twitter/X

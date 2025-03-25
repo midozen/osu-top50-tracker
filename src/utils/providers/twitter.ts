@@ -1,7 +1,7 @@
 import { TwitterApi } from "twitter-api-v2";
-import { log } from "./logger";
-import { LogLevel } from "../types/logger";
-import { fitSquareImage } from "./general";
+import { log } from "../logger";
+import { LogLevel } from "../../types/logger";
+import { fitSquareImage } from "../general";
 
 export async function postTwitterUpdate(message: string, image: Buffer | undefined) {
 

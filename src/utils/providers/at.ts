@@ -1,8 +1,8 @@
 import { AtpAgent } from '@atproto/api';
 
-import { LogLevel } from "../types/logger";
-import { log } from "./logger";
-import { fitSquareImage } from './general';
+import { LogLevel } from "../../types/logger";
+import { log } from "../logger";
+import { fitSquareImage } from '../general';
 
 // Post an update to Bluesky
 export async function postBlueskyUpdate(message: string, image: Buffer | undefined) {

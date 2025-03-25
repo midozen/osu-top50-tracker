@@ -5,9 +5,9 @@ import { UserStatistics } from './types/osu';
 import { ChangedUser } from './types/general';
 
 import { assembleUpdate, flagUrl, renderLeaderboard } from './utils/general';
-import { postDiscordUpdate } from './utils/discord';
-import { postBlueskyUpdate } from './utils/at';
-import { postTwitterUpdate } from './utils/twitter';
+import { postDiscordUpdate } from './utils/providers/discord';
+import { postBlueskyUpdate } from './utils/providers/at';
+import { postTwitterUpdate } from './utils/providers/twitter';
 import { getRankings, getToken } from './utils/osu';
 import { log } from './utils/logger';
 
@@ -47,20 +47,19 @@ async function main() {
 
             // Put all of the changes into a nice format, really shitty but it's whatever
             const changedUsers: ChangedUser[] = changes.map((user, index) => {
-
                 const old_rank = rankings.findIndex((ranking) => ranking.user.id === user.user.id) + 1;
                 const new_rank = new_rankings.findIndex((ranking) => ranking.user.id === user.user.id) + 1;
-
+            
                 return {
                     new_rank,
                     old_rank,
-                    rank_difference: Math.abs(old_rank - new_rank),
-                    rank_up: old_rank > new_rank,
-                    pp_change: Math.round(user.pp - rankings[old_rank - 1].pp),
+                    rank_difference: old_rank > 0 ? Math.abs(old_rank - new_rank) : 0,
+                    rank_up: old_rank > 0 ? old_rank > new_rank : true,
+                    pp_change: old_rank > 0 ? Math.round(user.pp - rankings[old_rank - 1]?.pp || 0) : 0,
                     username: user.user.username,
                     flag_url: flagUrl(user.user.country_code),
                 };
-            });
+            });            
 
             log('Assembling update message', LogLevel.DEBUG);
 

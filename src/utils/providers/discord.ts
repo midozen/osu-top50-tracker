@@ -1,5 +1,5 @@
-import { LogLevel } from "../types/logger";
-import { log } from "./logger";
+import { LogLevel } from "../../types/logger";
+import { log } from "../logger";
 
 // Post an update to Discord
 export async function postDiscordUpdate(message: string, image: Buffer | undefined) {
