@@ -11,9 +11,6 @@ export async function getToken(): Promise<TokenResponse> {
   const client_id = process.env.OSU_CLIENT_ID;
   const client_secret = process.env.OSU_CLIENT_SECRET;
 
-  if (process.env.DUMMY_DATA)
-    return { access_token: "DUMMY", token_type: "bearer", expires_in: 3600 }
-
   if (!client_id || !client_secret) {
     throw new Error(
       "Missing osu! client_id or client_secret in environment variables"
